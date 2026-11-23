@@ -1,0 +1,280 @@
+/* Colvin Gardens - site stylesheet.
+   Made from the BKBoK site's bkbok-docs.css (itself from the Rosetta
+   manuals' rosetta-docs.css), recoloured garden green: a light sage
+   header with the banner lettering in dark green, blue links on a
+   near-white page (option A, chosen by Rich 23 November 2026). Plain
+   CSS, no external files. Laid out for phones too: on a narrow screen
+   the cultivar tables become one card per cultivar and side-by-side
+   layout tables stack.
+
+   Contrast (WCAG): banner lettering on header 7.9:1, body text 14.6:1,
+   headings 6.3:1, links 6.3:1, text in a note box 13.2:1, white on the
+   cultivar tables' green heading row 5.1:1.
+
+   Version
+     1.0 - 23 November 2026 */
+:root {
+  --navy: #2e6b1f;       /* headings (the name is kept from the Rosetta stylesheet) */
+  --ink: #1d2a1d;
+  --muted: #5a6b52;
+  --page: #fbfdf7;
+  --backdrop: #fbfdf7;
+  --rule: #9cc28a;
+  --panel: #eef6e6;
+  --link: #1f5fa8;
+  --link-hover: #143f72;
+  --header: #dcebd0;     /* light sage */
+  --header-ink: #1f4d1f; /* dark green, as the banner lettering */
+  --accent: #5a9a3c;
+  --note: #eaf4e1;
+  --table-head: #008000;  /* the cultivar tables' heading row, as on the old site */
+  --line: #6a6a6a;       /* table lines */
+}
+
+* { box-sizing: border-box; }
+
+html { background: var(--backdrop); }
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--backdrop);
+  font: 17px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, "DejaVu Sans", Arial, sans-serif;
+}
+
+/* Hyphenation, as in the Sharpening Handbook: on for running text
+   (needs lang="en" on <html>), off for headings, navigation and code. */
+body { -webkit-hyphens: auto; hyphens: auto; }
+h1, h2, h3, h4, .site-header, .crumbs, .toc, .footer-links, code, pre, kbd, a {
+  -webkit-hyphens: manual; hyphens: manual;
+}
+
+a { color: var(--link); }
+a { text-underline-offset: 2px; }
+a:hover { color: var(--link-hover); }
+
+/* ---------- header ---------- */
+.site-header {
+  position: sticky; top: 0; z-index: 50;     /* stays at the top while scrolling */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 24px;
+  padding: 10px 24px;
+  background: var(--header);
+  color: var(--header-ink);
+  border-bottom: 1px solid var(--rule);
+}
+.brand { display: flex; align-items: center; min-width: 0; }
+.brand img { display: block; height: 52px; width: auto; max-width: 100%; }
+.site-nav { display: flex; gap: 6px; flex-wrap: wrap; }
+.site-nav a {
+  color: var(--header-ink); text-decoration: none; padding: 6px 12px; border-radius: 6px;
+  border: 1px solid rgba(31,77,31,.4); font-size: 15px;
+}
+.site-nav a:hover { background: rgba(255,255,255,.35); color: var(--header-ink); }
+
+/* jumping to a heading leaves it below the sticky header, not under it */
+[id] { scroll-margin-top: 92px; }
+
+/* ---------- search (rosetta-docs.js) ---------- */
+.site-search { position: relative; flex: 1 1 260px; max-width: 420px; }
+.site-search input {
+  width: 100%; padding: 7px 12px; font: inherit; font-size: 15px;
+  border: 1px solid rgba(31,77,31,.45); border-radius: 6px;
+  background: rgba(255,255,255,.4); color: var(--header-ink);
+}
+.site-search input::placeholder { color: #3d5c33; }
+.site-search input:focus { outline: none; background: #fff; color: var(--ink); }
+.search-results {
+  position: absolute; left: 0; right: 0; top: calc(100% + 4px);
+  max-height: 70vh; overflow-y: auto; min-width: 320px;
+  background: #fff; color: var(--ink); border: 1px solid var(--rule); border-radius: 6px;
+  box-shadow: 0 6px 20px rgba(0,0,0,.25); -webkit-hyphens: manual; hyphens: manual;
+}
+.search-results a {
+  display: block; padding: 8px 12px; text-decoration: none; color: var(--ink);
+  border-bottom: 1px solid #eceef2;
+}
+.search-results a:hover, .search-results a.active { background: var(--panel); color: var(--ink); }
+.search-title { display: block; font-weight: 600; color: var(--navy); }
+.search-head { font-weight: 400; }
+.search-where { display: block; font-size: 12px; color: var(--muted); }
+.search-snip { display: block; font-size: 13.5px; color: #3b4352; margin-top: 2px; }
+.search-results mark { background: #d4ecb8; color: inherit; padding: 0 1px; }
+.search-none { margin: 0; padding: 10px 12px; color: var(--muted); }
+
+/* ---------- picture zoom (rosetta-docs.js) ---------- */
+img.zoomable { cursor: zoom-in; }
+.zoom-overlay {
+  position: fixed; inset: 0; z-index: 100; cursor: zoom-out;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(10, 12, 30, .82); padding: 2vh 2vw;
+}
+.zoom-overlay img { max-width: 96vw; max-height: 94vh; background: #fff; box-shadow: 0 4px 30px rgba(0,0,0,.5); }
+
+/* ---------- page ---------- */
+.page {
+  margin: 0;
+  padding: 20px 32px 32px;
+  background: var(--page);
+  overflow-wrap: break-word;
+}
+.crumbs { margin: 0 0 4px; font-size: 14px; color: var(--muted); min-height: 1em; }
+.crumbs a { color: var(--muted); }
+h1 { color: var(--navy); font-size: 32px; line-height: 1.2; margin: 0 0 16px; }
+h2, h3, h4 { color: var(--navy); line-height: 1.25; margin: 1.6em 0 .4em; clear: none; }
+.content h1 { font-size: 27px; margin: 1.6em 0 .4em; padding-bottom: 4px; border-bottom: 2px solid var(--rule); }
+h2 { font-size: 23px; padding-bottom: 4px; border-bottom: 1px solid var(--rule); }
+h3 { font-size: 20px; }
+h4 { font-size: 18px; }
+p { margin: .6em 0; }
+hr { border: 0; border-top: 1px solid var(--rule); margin: 1.4em 0; }   /* no clear: the old site's side boxes (Caution) sit beside the next heading */
+img { max-width: 100%; height: auto; }
+code, pre, kbd { font-family: "DejaVu Sans Mono", Menlo, Consolas, monospace; font-size: .92em; }
+pre { background: var(--panel); padding: 12px 14px; border-radius: 6px; overflow-x: auto; white-space: pre-wrap; }
+
+/* "On this page" */
+.toc {
+  display: inline-block; min-width: 280px; max-width: 100%;
+  margin: 0 0 20px; padding: 10px 16px;
+  background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; font-size: 14.5px;
+}
+.toc p { margin: 0 0 4px; font-weight: 600; color: var(--navy); }
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc li { margin: 3px 0; }
+.toc .toc-l1 { padding-left: 14px; } .toc .toc-l2 { padding-left: 28px; font-size: 13.5px; }
+.toc a { text-decoration: none; }
+.toc a:hover { text-decoration: underline; }
+
+/* links to another web site (the old site typed "↗" after them by hand) */
+a.online::after { content: " ↗"; font-size: .85em; }
+
+/* ---------- PmWiki-era content classes ---------- */
+.content table { border-collapse: collapse; max-width: 100%; }
+.content td, .content th { padding: 4px 8px; vertical-align: top; }
+.content table.full { width: 100%; }
+/* every table with lines: the same thin lines (Rich, 23 November 2026) */
+.content table.lined td, .content table.lined th { border: 1px solid var(--line); }
+.content table.float-right { float: right; margin: 0 0 12px 20px; }
+.content table.float-left { float: left; margin: 0 20px 12px 0; }
+.content table ul, .content table ol { margin: 0; padding-left: 1.2em; }
+
+/* the Cultivars tables: dark green heading row, thin lines */
+.content table.cultivars { width: 100%; margin: .6em 0 1em; background: #fff; font-size: 15.5px; }
+.cultivars th {
+  background: var(--table-head); color: #fff; font-weight: 700; text-align: center;
+  vertical-align: bottom; border: 1px solid var(--line); padding: 5px 8px;
+}
+.cultivars td { border: 1px solid var(--line); padding: 5px 8px; }
+.cultivars td > p:first-child { margin-top: 0; } .cultivars td > p:last-child { margin-bottom: 0; }
+.vspace { margin-top: 1em; }
+.indent { margin-left: 2em; }
+.clearboth { clear: both; }
+.left { text-align: left; } .center { text-align: center; } .right { text-align: right; }
+.rfloat { float: right; margin: 4px 0 12px 20px; }
+.lfloat { float: left; margin: 4px 20px 12px 0; }
+.img { margin: 0; }
+.content div[style*="width"] { max-width: 100%; }   /* captioned pictures set a width */
+.frame { display: inline-block; padding: 6px; background: #fff; max-width: 100%; border: 1px solid var(--rule); border-radius: 4px; }
+.frame.rfloat, .frame.lfloat { display: block; }
+.caption { display: block; text-align: center; font-size: 14.5px; color: var(--muted); padding-top: 4px; }
+.pmL1 { font-size: 1.2em; } .pmL2 { font-size: 1.44em; } .pmL3 { font-size: 1.73em; } .pmL4 { font-size: 2.07em; }
+.pmS1 { font-size: .83em; } .pmS2 { font-size: .69em; }
+math { font-size: 1.1em; }
+
+/* ---------- Previous / Next (tools/build_site.py) ---------- */
+.pager {
+  display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px;
+  margin-top: 32px; -webkit-hyphens: manual; hyphens: manual;
+}
+.pager a {
+  display: block; padding: 10px 14px; border: 1px solid var(--rule); border-radius: 6px;
+  background: var(--panel); text-decoration: none; color: var(--navy); font-weight: 600;
+}
+.pager a:hover { border-color: var(--accent); }
+.pager a span { display: block; font-size: 12.5px; font-weight: 400; color: var(--muted); }
+.pager-prev { grid-column: 1; }
+.pager-prev span::before { content: "\2190  "; }
+.pager-contents { grid-column: 2; text-align: center; }
+.pager-next { grid-column: 3; text-align: right; }
+.pager-next span::after { content: "  \2192"; }
+
+/* ---------- Note boxes ---------- */
+.note {
+  margin: 1em 0; padding: 10px 14px; border-left: 5px solid var(--accent);
+  background: var(--note);
+}
+.note > :first-child { margin-top: 0; } .note > :last-child { margin-bottom: 0; }
+
+
+/* ---------- download button ---------- */
+a.download {
+  display: inline-block; margin: 4px 0; padding: 7px 14px; border-radius: 6px;
+  background: var(--navy); color: #fff; text-decoration: none; font-weight: 600;
+}
+a.download:hover { background: #1f4d1f; color: #fff; }
+
+/* ---------- footer ---------- */
+.site-footer {
+  margin: 0; padding: 12px 32px 24px; border-top: 1px solid var(--rule);
+  color: var(--muted); font-size: 14px;
+}
+.site-footer p { margin: .4em 0; }
+.footer-links {
+  display: grid; grid-template-columns: 1fr auto; gap: 8px 24px;
+  margin: 10px 0; padding: 8px 12px; background: var(--panel); border: 1px solid var(--rule); color: var(--ink);
+}
+.footer-contact { text-align: right; }
+.copyright { font-size: 13px; }
+
+/* ---------- small screens ---------- */
+@media (max-width: 760px) {
+  body { font-size: 16px; }
+  .site-header { padding: 10px 16px; }
+  .page { padding: 16px; }
+  .site-footer { padding: 12px 16px 20px; }
+  .footer-links { grid-template-columns: 1fr; }
+  .site-search { order: 3; flex-basis: 100%; max-width: none; }
+  .search-results { min-width: 0; }
+  .pager { grid-template-columns: 1fr 1fr; }
+  .pager-next { grid-column: 2; }
+  .pager-contents { grid-column: 1 / -1; grid-row: 2; }
+  .brand img { height: auto; }
+  .site-header { position: static; }    /* on a phone it would take too much of the screen */
+  [id] { scroll-margin-top: 8px; }
+  .footer-contact { text-align: left; }
+  .rfloat, .lfloat, .content table.float-right, .content table.float-left {
+    float: none !important; width: auto !important; margin: 12px 0 !important;
+  }
+  /* side-by-side layout tables stack */
+  .content table.stack, .content table.stack > tbody, .content table.stack > tr,
+  .content table.stack > tbody > tr, .content table.stack > tr > td,
+  .content table.stack > tbody > tr > td { display: block; width: auto !important; }
+  /* other tables with lines scroll sideways if they must */
+  .content table.lined { display: block; overflow-x: auto; }
+  /* the Cultivars tables: one card per cultivar, each value labelled */
+  .content table.cultivars, .cultivars tbody, .cultivars tr, .cultivars td { display: block; width: auto; }
+  .content table.cultivars { background: none; }
+  .cultivars thead { display: none; }
+  .cultivars tr { margin: 0 0 12px; border: 1px solid var(--line); background: #fff; }
+  .cultivars td {
+    border: 0; border-top: 1px solid #d6dfd0; padding: 5px 10px;
+    display: grid; grid-template-columns: 7.5em 1fr; gap: 8px; text-align: left !important;
+  }
+  .cultivars td::before { content: attr(data-label); font-weight: 600; color: var(--navy); }
+  .cultivars td:first-child { display: block; background: var(--table-head); color: #fff; border-top: 0; }
+  .cultivars td:first-child::before { content: none; }
+  .cultivars td:first-child a { color: #fff; }
+  .cultivars td:empty { display: none; }
+  .indent { margin-left: 1em; }
+  h1 { font-size: 26px; }
+}
+
+@media print {
+  html, body { background: #fff; }
+  .site-header, .site-nav, .toc, .site-footer, .pager, .site-search { display: none; }
+  .page { box-shadow: none; margin: 0; max-width: none; padding: 0; }
+  a.online::after { content: none; }
+}

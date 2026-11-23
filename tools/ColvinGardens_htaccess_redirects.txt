@@ -1,0 +1,109 @@
+# The lines for colvingardens.info's own .htaccess (in the site's top
+# folder on GoDaddy), for when the static HTML pages replace the PmWiki
+# site.
+#
+# Version
+#   1.0 - 23 November 2026
+#
+# The pages keep the old site's names (index.php?n=Main.Achillea is now
+# Achillea.html) and the pictures keep their old folder (Images/), so
+# old links from bookmarks and search engines still arrive at the right
+# page. The old copies of pages under a common name (Yarrow, Coneflowers
+# ...) go to the page they copied; the beekeeping pages (older copies of
+# BKBoK's, left out) go to bkbok.info, whose own .htaccess sends them on
+# to the right page there. Every other old wiki address - including
+# ?action=edit - goes to the Index.
+#
+# The publish script never writes .htaccess, so paste these lines in by
+# hand: at the END of the existing .htaccess, or as the whole file if
+# there is none (if it has a DirectoryIndex line, replace that one with
+# the one below rather than having two).
+
+# --- Colvin Gardens: PmWiki replaced by static HTML pages (23 November 2026) ---
+# "/" shows index.html, not PmWiki's index.php
+DirectoryIndex index.html index.php
+
+RewriteEngine On
+
+# The Index
+RewriteCond %{QUERY_STRING} (?:^|&)n=Main[./]HomePage(?:&|$) [NC]
+RewriteRule ^(index\.php|pmwiki\.php)?$ / [R=301,L,QSD]
+
+# Old copies of pages, under another name
+RewriteCond %{QUERY_STRING} (?:^|&)n=Main[./]About(?:&|$) [NC]
+RewriteRule ^(index\.php|pmwiki\.php)?$ /AboutThisSite.html [R=301,L,QSD]
+RewriteCond %{QUERY_STRING} (?:^|&)n=Main[./]AniseHyssop(?:&|$) [NC]
+RewriteRule ^(index\.php|pmwiki\.php)?$ /Agastache.html [R=301,L,QSD]
+RewriteCond %{QUERY_STRING} (?:^|&)n=Main[./]ButterflyBush(?:&|$) [NC]
+RewriteRule ^(index\.php|pmwiki\.php)?$ /Buddleja.html [R=301,L,QSD]
+RewriteCond %{QUERY_STRING} (?:^|&)n=Main[./]Coneflowers(?:&|$) [NC]
+RewriteRule ^(index\.php|pmwiki\.php)?$ /Echinacea.html [R=301,L,QSD]
+RewriteCond %{QUERY_STRING} (?:^|&)n=Main[./]RussianSage(?:&|$) [NC]
+RewriteRule ^(index\.php|pmwiki\.php)?$ /Perovskia.html [R=301,L,QSD]
+RewriteCond %{QUERY_STRING} (?:^|&)n=Main[./]Yarrow(?:&|$) [NC]
+RewriteRule ^(index\.php|pmwiki\.php)?$ /Achillea.html [R=301,L,QSD]
+RewriteCond %{QUERY_STRING} (?:^|&)n=Main[./]Blueberries(?:&|$) [NC]
+RewriteRule ^(index\.php|pmwiki\.php)?$ /Vaccinium.html [R=301,L,QSD]
+RewriteCond %{QUERY_STRING} (?:^|&)n=Main[./]JoePyeWeedHollow-stemmed(?:&|$) [NC]
+RewriteRule ^(index\.php|pmwiki\.php)?$ /Eutrochium.html [R=301,L,QSD]
+RewriteCond %{QUERY_STRING} (?:^|&)n=Main[./]EupatoriadelphusFistulous(?:&|$) [NC]
+RewriteRule ^(index\.php|pmwiki\.php)?$ /Eutrochium.html [R=301,L,QSD]
+
+# Beekeeping pages -> bkbok.info
+RewriteCond %{QUERY_STRING} (?:^|&)n=Main[./](AngryOrAggressive|ApiaryLocation|BeeEscapeBoard)(?:&|$|[^A-Za-z]) [NC]
+RewriteRule ^(index\.php|pmwiki\.php)?$ https://bkbok.info/index.php?n=Main.%1 [R=301,L,QSD]
+RewriteCond %{QUERY_STRING} (?:^|&)n=Main[./](BeekeepingOperationSizes|BeingAGoodMentor|BottomBoard)(?:&|$|[^A-Za-z]) [NC]
+RewriteRule ^(index\.php|pmwiki\.php)?$ https://bkbok.info/index.php?n=Main.%1 [R=301,L,QSD]
+RewriteCond %{QUERY_STRING} (?:^|&)n=Main[./](BroodBoxes|Checkerboarding|ColonyOrHive|ContestsAmpHoney)(?:&|$|[^A-Za-z]) [NC]
+RewriteRule ^(index\.php|pmwiki\.php)?$ https://bkbok.info/index.php?n=Main.%1 [R=301,L,QSD]
+RewriteCond %{QUERY_STRING} (?:^|&)n=Main[./](EntranceReducer|Feeders|Foundation|Frames|GettingAMentor)(?:&|$|[^A-Za-z]) [NC]
+RewriteRule ^(index\.php|pmwiki\.php)?$ https://bkbok.info/index.php?n=Main.%1 [R=301,L,QSD]
+RewriteCond %{QUERY_STRING} (?:^|&)n=Main[./](Guidelines|HardwareCloth|HiveEquipment|HivePlacement)(?:&|$|[^A-Za-z]) [NC]
+RewriteRule ^(index\.php|pmwiki\.php)?$ https://bkbok.info/index.php?n=Main.%1 [R=301,L,QSD]
+RewriteCond %{QUERY_STRING} (?:^|&)n=Main[./](HiveStands|HivesAndSpring|HivesAndSummer|HivesAndWinter)(?:&|$|[^A-Za-z]) [NC]
+RewriteRule ^(index\.php|pmwiki\.php)?$ https://bkbok.info/index.php?n=Main.%1 [R=301,L,QSD]
+RewriteCond %{QUERY_STRING} (?:^|&)n=Main[./](HoneyBeeSubspecies|HoneyHarvesting|HoneyLabelling)(?:&|$|[^A-Za-z]) [NC]
+RewriteRule ^(index\.php|pmwiki\.php)?$ https://bkbok.info/index.php?n=Main.%1 [R=301,L,QSD]
+RewriteCond %{QUERY_STRING} (?:^|&)n=Main[./](HoneySupers|HorizontalHive|InnerCover|InspectingColonies)(?:&|$|[^A-Za-z]) [NC]
+RewriteRule ^(index\.php|pmwiki\.php)?$ https://bkbok.info/index.php?n=Main.%1 [R=301,L,QSD]
+RewriteCond %{QUERY_STRING} (?:^|&)n=Main[./](InspectionAndActionRecord)(?:&|$|[^A-Za-z]) [NC]
+RewriteRule ^(index\.php|pmwiki\.php)?$ https://bkbok.info/index.php?n=Main.%1 [R=301,L,QSD]
+RewriteCond %{QUERY_STRING} (?:^|&)n=Main[./](InspectionInspectionAndActionRecord)(?:&|$|[^A-Za-z]) [NC]
+RewriteRule ^(index\.php|pmwiki\.php)?$ https://bkbok.info/index.php?n=Main.%1 [R=301,L,QSD]
+RewriteCond %{QUERY_STRING} (?:^|&)n=Main[./](IntegratedPestManagement|LangstrothBoxSizes)(?:&|$|[^A-Za-z]) [NC]
+RewriteRule ^(index\.php|pmwiki\.php)?$ https://bkbok.info/index.php?n=Main.%1 [R=301,L,QSD]
+RewriteCond %{QUERY_STRING} (?:^|&)n=Main[./](LangstrothHive|LangstrothHives|LayingWorker)(?:&|$|[^A-Za-z]) [NC]
+RewriteRule ^(index\.php|pmwiki\.php)?$ https://bkbok.info/index.php?n=Main.%1 [R=301,L,QSD]
+RewriteCond %{QUERY_STRING} (?:^|&)n=Main[./](ManagementCalendar|MergingColonies|MigratoryCover)(?:&|$|[^A-Za-z]) [NC]
+RewriteRule ^(index\.php|pmwiki\.php)?$ https://bkbok.info/index.php?n=Main.%1 [R=301,L,QSD]
+RewriteCond %{QUERY_STRING} (?:^|&)n=Main[./](ObservationHives|Painting|Queen|QueenExcluder)(?:&|$|[^A-Za-z]) [NC]
+RewriteRule ^(index\.php|pmwiki\.php)?$ https://bkbok.info/index.php?n=Main.%1 [R=301,L,QSD]
+RewriteCond %{QUERY_STRING} (?:^|&)n=Main[./](QueenMarkingColors|QuiltBox|RecordKeeping)(?:&|$|[^A-Za-z]) [NC]
+RewriteRule ^(index\.php|pmwiki\.php)?$ https://bkbok.info/index.php?n=Main.%1 [R=301,L,QSD]
+RewriteCond %{QUERY_STRING} (?:^|&)n=Main[./](RegisteringYourBees|ReplacingTheQueen|Shim|SlattedRack)(?:&|$|[^A-Za-z]) [NC]
+RewriteRule ^(index\.php|pmwiki\.php)?$ https://bkbok.info/index.php?n=Main.%1 [R=301,L,QSD]
+RewriteCond %{QUERY_STRING} (?:^|&)n=Main[./](SmallHiveBeetle|SpanningCover|SplittingColonies)(?:&|$|[^A-Za-z]) [NC]
+RewriteRule ^(index\.php|pmwiki\.php)?$ https://bkbok.info/index.php?n=Main.%1 [R=301,L,QSD]
+RewriteCond %{QUERY_STRING} (?:^|&)n=Main[./](SplittingHives|SwarmsAndSwarming|TelescopingCover)(?:&|$|[^A-Za-z]) [NC]
+RewriteRule ^(index\.php|pmwiki\.php)?$ https://bkbok.info/index.php?n=Main.%1 [R=301,L,QSD]
+RewriteCond %{QUERY_STRING} (?:^|&)n=Main[./](TransportingBeesInsideACar|Tropilaelaps|Varroa)(?:&|$|[^A-Za-z]) [NC]
+RewriteRule ^(index\.php|pmwiki\.php)?$ https://bkbok.info/index.php?n=Main.%1 [R=301,L,QSD]
+RewriteCond %{QUERY_STRING} (?:^|&)n=Main[./](VarroaSensitiveHygiene|VarroaSensitiveQueen)(?:&|$|[^A-Za-z]) [NC]
+RewriteRule ^(index\.php|pmwiki\.php)?$ https://bkbok.info/index.php?n=Main.%1 [R=301,L,QSD]
+RewriteCond %{QUERY_STRING} (?:^|&)n=Main[./](BeingAGoodProt)(?:&|$|[^A-Za-z]) [NC]
+RewriteRule ^(index\.php|pmwiki\.php)?$ https://bkbok.info/index.php?n=Main.%1 [R=301,L,QSD]
+
+# index.php?n=Main.SomePage -> SomePage.html, if that page exists
+RewriteCond %{QUERY_STRING} (?:^|&)n=Main[./]([A-Za-z0-9-]+)
+RewriteRule ^(index\.php|pmwiki\.php)?$ - [E=CG_PAGE:%1]
+RewriteCond %{ENV:CG_PAGE} .
+RewriteCond %{DOCUMENT_ROOT}/%{ENV:CG_PAGE}.html -f
+RewriteRule ^(index\.php|pmwiki\.php)?$ /%{ENV:CG_PAGE}.html [R=301,L,QSD]
+
+# Anything else of the old wiki's (pages that no longer exist, other
+# groups, ?action=edit, search, ...) -> the Index. "/" itself is left
+# alone when it has no ?n= (else it would redirect to itself).
+RewriteRule ^(index\.php|pmwiki\.php)$ / [R=301,L,QSD]
+RewriteCond %{QUERY_STRING} (?:^|&)(n|action)= [NC]
+RewriteRule ^$ / [R=301,L,QSD]
+# ---------------------------------------------------------------------
