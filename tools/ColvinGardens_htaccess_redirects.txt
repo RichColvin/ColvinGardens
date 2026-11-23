@@ -4,6 +4,8 @@
 #
 # Version
 #   1.0 - 23 November 2026
+#   1.1 - 23 November 2026 - Honey goes to BKBoK's Honey page (the
+#         Colvin Gardens copy deleted)
 #
 # The pages keep the old site's names (index.php?n=Main.Achillea is now
 # Achillea.html) and the pictures keep their old folder (Images/), so
@@ -28,6 +30,11 @@ RewriteEngine On
 # The Index
 RewriteCond %{QUERY_STRING} (?:^|&)n=Main[./]HomePage(?:&|$) [NC]
 RewriteRule ^(index\.php|pmwiki\.php)?$ / [R=301,L,QSD]
+
+# Honey: BKBoK's page (23 November 2026 - the copy here was deleted)
+RewriteCond %{QUERY_STRING} (?:^|&)n=Main[./]Honey(?:&|$) [NC]
+RewriteRule ^(index\.php|pmwiki\.php)?$ https://www.bkbok.info/Honey.html [R=301,L,QSD]
+RewriteRule ^Honey\.html$ https://www.bkbok.info/Honey.html [R=301,L]
 
 # Old copies of pages, under another name
 RewriteCond %{QUERY_STRING} (?:^|&)n=Main[./]About(?:&|$) [NC]
